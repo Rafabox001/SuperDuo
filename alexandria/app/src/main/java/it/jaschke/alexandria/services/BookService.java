@@ -22,6 +22,7 @@ import java.net.URL;
 import it.jaschke.alexandria.MainActivity;
 import it.jaschke.alexandria.R;
 import it.jaschke.alexandria.data.AlexandriaContract;
+import it.jaschke.alexandria.utils.Utility;
 
 
 /**
@@ -73,6 +74,10 @@ public class BookService extends IntentService {
     private void fetchBook(String ean) {
 
         if(ean.length()!=13){
+            return;
+        }
+
+        if(!Utility.isNetworkAvailable(getApplicationContext())){
             return;
         }
 
@@ -171,7 +176,10 @@ public class BookService extends IntentService {
 
             JSONObject bookInfo = ((JSONObject) bookArray.get(0)).getJSONObject(VOLUME_INFO);
 
-            String title = bookInfo.getString(TITLE);
+            String title = "";
+            if (bookInfo.has(TITLE)) {
+                title = bookInfo.getString(TITLE);
+            }
 
             String subtitle = "";
             if(bookInfo.has(SUBTITLE)) {

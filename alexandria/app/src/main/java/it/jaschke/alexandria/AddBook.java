@@ -21,10 +21,12 @@ import android.widget.Toast;
 
 
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import it.jaschke.alexandria.data.AlexandriaContract;
 import it.jaschke.alexandria.services.BookService;
 import it.jaschke.alexandria.services.DownloadImage;
+import it.jaschke.alexandria.utils.Utility;
 
 
 public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -35,11 +37,11 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     private final String EAN_CONTENT="eanContent";
     private static final String SCAN_FORMAT = "scanFormat";
     private static final String SCAN_CONTENTS = "scanContents";
-
     private String mScanFormat = "Format:";
     private String mScanContents = "Contents:";
+    private String toast;
 
-
+    public boolean isNetworkAvailable;
 
     public AddBook(){
     }
@@ -81,11 +83,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
                     return;
                 }
                 //Once we have an ISBN, start a book intent
-                Intent bookIntent = new Intent(getActivity(), BookService.class);
-                bookIntent.putExtra(BookService.EAN, ean);
-                bookIntent.setAction(BookService.FETCH_BOOK);
-                getActivity().startService(bookIntent);
-                AddBook.this.restartLoader();
+                getBookData(ean);
             }
         });
 
@@ -97,10 +95,11 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
                  *  I choose embeded library so we can use the barcode reader inside the app without other
                  *  app installation required.
                  */
-                IntentIntegrator integrator = new IntentIntegrator(getActivity());
+                /*IntentIntegrator integrator = new IntentIntegrator(getActivity());
                 integrator.setCaptureActivity(CaptureActivityAnyOrientation.class);
                 integrator.setOrientationLocked(false);
-                integrator.initiateScan();
+                integrator.initiateScan();*/
+                IntentIntegrator.forSupportFragment(AddBook.this).initiateScan();
 
             }
         });
@@ -129,6 +128,28 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         }
 
         return rootView;
+    }
+
+    public void getBookData(String ean) {
+        isNetworkAvailable = Utility.isNetworkAvailable(getActivity());
+
+        if (isNetworkAvailable) {
+            Intent bookIntent = new Intent(getActivity(), BookService.class);
+            bookIntent.putExtra(BookService.EAN, ean);
+            bookIntent.setAction(BookService.FETCH_BOOK);
+            getActivity().startService(bookIntent);
+            AddBook.this.restartLoader();
+        } else {
+            toast = "No Internet Connectivity";
+            showToast();
+        }
+    }
+
+    private void showToast() {
+        if (getActivity() != null && toast != null) {
+            Toast.makeText(getActivity(), toast, Toast.LENGTH_LONG).show();
+            toast = null;
+        }
     }
 
     private void restartLoader(){
@@ -202,5 +223,36 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         activity.setTitle(R.string.scan);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null) {
+            if (result.getContents() == null) {
+                toast = "Cancelled from fragment";
+            } else {
+                toast = "Scanned from fragment: " + result.getContents();
+                ean.setText(result.getContents() + "");
+                getBookData(result.getContents());
+            }
+
+            showToast();
+        }
+    }
+
+    public void updateData(IntentResult response){
+        IntentResult result = response;
+        if (result != null) {
+            if (result.getContents() == null) {
+                toast = "Cancelled from fragment";
+            } else {
+                toast = "Scanned from fragment: " + result.getContents();
+                ean.setText(result.getContents() + "");
+                getBookData(result.getContents());
+            }
+
+            showToast();
+        }
     }
 }
