@@ -128,6 +128,7 @@ public class BookService extends IntentService {
                 return;
             }
             bookJsonString = buffer.toString();
+            Log.d(LOG_TAG, "JSON: " + bookJsonString);
         } catch (Exception e) {
             Log.e(LOG_TAG, "Error ", e);
         } finally {
