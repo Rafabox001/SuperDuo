@@ -57,7 +57,9 @@
             android:gravity="center"
             android:contentDescription="@string/share"
             android:paddingLeft="120dp"
+            android:paddingStart="120dp"
             android:paddingRight="120dp"
+            android:paddingEnd="120dp"
             android:text="@string/share_text" />
     </FrameLayout>
 
