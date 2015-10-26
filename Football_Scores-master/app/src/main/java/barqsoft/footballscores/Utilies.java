@@ -6,22 +6,25 @@ import java.util.Date;
 /**
  * Created by yehya khaled on 3/3/2015.
  */
-public class Utilies
-{
-    public static final int SERIE_A = 357;
-    public static final int PREMIER_LEGAUE = 354;
-    public static final int CHAMPIONS_LEAGUE = 362;
-    public static final int PRIMERA_DIVISION = 358;
-    public static final int BUNDESLIGA = 351;
+public class Utilies {
+    public static final int BUNDESLIGA1 = 394;
+    public static final int LIGUE1 = 396;
+    public static final int PREMIER_LEAGUE = 398;
+    public static final int PRIMERA_DIVISION = 399;
+    public static final int SERIE_A = 401;
+    public static final int EREDIVISIE = 404;
+    public static final int CHAMPIONS_LEAGUE = 405;
     public static String getLeague(int league_num)
     {
         switch (league_num)
         {
             case SERIE_A : return "Seria A";
-            case PREMIER_LEGAUE : return "Premier League";
+            case PREMIER_LEAGUE : return "Premier League";
             case CHAMPIONS_LEAGUE : return "UEFA Champions League";
             case PRIMERA_DIVISION : return "Primera Division";
-            case BUNDESLIGA : return "Bundesliga";
+            case BUNDESLIGA1 : return "Bundesliga";
+            case LIGUE1 : return "Ligue 1";
+            case EREDIVISIE : return "Eredivisie";
             default: return "Not known League Please report";
         }
     }
@@ -83,7 +86,7 @@ public class Utilies
             case "West Bromwich Albion" : return R.drawable.west_bromwich_albion_hd_logo;
             case "Sunderland AFC" : return R.drawable.sunderland;
             case "Stoke City FC" : return R.drawable.stoke_city;
-            default: return R.drawable.no_icon;
+            default: return R.drawable.ic_launcher;
         }
     }
 

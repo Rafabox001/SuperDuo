@@ -3,54 +3,66 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:elevation="4dp"
-    android:background="@drawable/list_item"
-    >
+    android:background="@drawable/list_item">
+
     <LinearLayout
         android:orientation="horizontal" android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        >
+        android:paddingTop="5dp">
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
             <ImageView
-                android:layout_width="wrap_content"
+                android:id="@+id/home_crest"
+                android:layout_width="40dp"
+                android:contentDescription="@string/home_team"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:id="@+id/home_crest"/>
+                android:src="@drawable/manchester_city" />
+
             <TextView
+                android:id="@+id/home_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="@dimen/TeamNames"
+                android:contentDescription="@string/home_team"
+                android:layout_marginTop="7dp"
                 android:gravity="center"
                 android:text="@string/test_text"
-                android:id="@+id/home_name"/>
+                android:textColor="#000"
+                android:textSize="@dimen/TeamNames" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/score_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="@string/test_text"
                 android:layout_gravity="center"
+                android:layout_weight="1"
+                android:contentDescription="@string/score"
                 android:gravity="center"
-                android:textSize="@dimen/Score"
-                android:id="@+id/score_textview"/>
+                android:text="@string/test_text"
+                android:textColor="@color/blue01"
+                android:textSize="@dimen/Score" />
+
             <TextView
+                android:id="@+id/data_textview"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/date"
+                android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
+                android:paddingTop="7dp"
                 android:text="@string/test_text"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:id="@+id/data_textview"/>
+                android:textColor="#3f3f3f" />
 
         </LinearLayout>
         <LinearLayout
@@ -59,23 +71,30 @@
             android:layout_weight="1"
             android:orientation="vertical">
             <ImageView
-                android:layout_width="wrap_content"
+                android:id="@+id/away_crest"
+                android:layout_width="40dp"
+                android:contentDescription="@string/away_team"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:id="@+id/away_crest"/>
+                android:src="@drawable/manchester_city" />
+
             <TextView
+                android:id="@+id/away_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/away_team"
                 android:layout_gravity="center"
+                android:layout_marginTop="7dp"
                 android:gravity="center"
                 android:text="@string/test_text"
-                android:textSize="@dimen/TeamNames"
-                android:id="@+id/away_name"/>
+                android:textColor="#000"
+                android:textSize="@dimen/TeamNames" />
         </LinearLayout>
     </LinearLayout>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/frame"
         android:id="@+id/details_fragment_container">
     </FrameLayout>
 </LinearLayout>
